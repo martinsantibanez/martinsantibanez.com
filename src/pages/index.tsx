@@ -1,39 +1,32 @@
-import clsx from 'clsx';
-import { InferGetStaticPropsType } from 'next';
-import * as React from 'react';
-import { IoArrowDownOutline } from 'react-icons/io5';
-import { IoNewspaperSharp } from 'react-icons/io5';
-import { SiGithub, SiTwitter } from 'react-icons/si';
-import { InView } from 'react-intersection-observer';
-
-import { trackEvent } from '@/lib/analytics';
-import { getAllFilesFrontmatter, getFeatured } from '@/lib/mdx';
-import { generateRss } from '@/lib/rss';
-import useInjectContentMeta from '@/hooks/useInjectContentMeta';
-import useLoaded from '@/hooks/useLoaded';
-
 import Accent from '@/components/Accent';
-import BlogCard from '@/components/content/blog/BlogCard';
-import LibraryCard from '@/components/content/library/LibraryCard';
 import ProjectCard from '@/components/content/projects/ProjectCard';
 import Layout from '@/components/layout/Layout';
 import ButtonLink from '@/components/links/ButtonLink';
 import CustomLink from '@/components/links/CustomLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
-import TC from '@/components/TC';
-import Tooltip from '@/components/Tooltip';
+import useInjectContentMeta from '@/hooks/useInjectContentMeta';
+import useLoaded from '@/hooks/useLoaded';
+import { trackEvent } from '@/lib/analytics';
+import { getAllFilesFrontmatter, getFeatured } from '@/lib/mdx';
+import { generateRss } from '@/lib/rss';
+import clsx from 'clsx';
+import { InferGetStaticPropsType } from 'next';
+import * as React from 'react';
+import { IoNewspaperSharp } from 'react-icons/io5';
+import { SiGithub, SiTwitter } from 'react-icons/si';
+import { InView } from 'react-intersection-observer';
 
 export default function IndexPage({
-  featuredPosts,
+  // featuredPosts,
+  // featuredLibrary,
+  // introPosts,
   featuredProjects,
-  featuredLibrary,
-  introPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const populatedPosts = useInjectContentMeta('blog', featuredPosts);
-  const populatedIntro = useInjectContentMeta('blog', introPosts);
+  // const populatedPosts = useInjectContentMeta('blog', featuredPosts);
+  // const populatedIntro = useInjectContentMeta('blog', introPosts);
   const populatedProjects = useInjectContentMeta('projects', featuredProjects);
-  const populatedLibrary = useInjectContentMeta('library', featuredLibrary);
+  // const populatedLibrary = useInjectContentMeta('library', featuredLibrary);
 
   const isLoaded = useLoaded();
 
@@ -49,14 +42,11 @@ export default function IndexPage({
           )}
         >
           <article className='layout'>
-            <h2 className='text-2xl md:text-4xl 2xl:text-5xl' data-fade='1'>
-              Hi!
-            </h2>
             <h1
               className='mt-1 text-3xl md:text-5xl 2xl:text-6xl'
               data-fade='2'
             >
-              You can call me <Accent>Clarence</Accent>
+              <Accent>Martín Santibáñez Ávalos</Accent>
             </h1>
             <p
               className={clsx(
@@ -65,15 +55,11 @@ export default function IndexPage({
               )}
               data-fade='3'
             >
-              I work with React Ecosystem, and write to teach people how to
-              rebuild and redefine fundamental concepts through mental models.
-            </p>
-            <p
-              className='mt-3 max-w-4xl leading-relaxed text-gray-700 dark:text-gray-200 md:mt-4 md:text-lg 2xl:text-xl'
-              data-fade='4'
-            >
-              Don't forget to sign my{' '}
-              <CustomLink href='/guestbook'>guestbook</CustomLink>!
+              Remote Software Engineer, mainly working with TypeScript. I enjoy
+              building solutions for complex problems. For the last few years,
+              I've been working as Lead Full Stack Developer at{' '}
+              <CustomLink href='https://www.kombo.co/en'>Kombo</CustomLink>{' '}
+              (France)
             </p>
             <div
               data-fade='5'
@@ -88,7 +74,7 @@ export default function IndexPage({
                     'opacity-75 transition duration-1000 group-hover:opacity-100 group-hover:duration-200'
                   )}
                 />
-                <ButtonLink href='#intro'>Read the blog</ButtonLink>
+                <ButtonLink href='#intro'>Portfolio</ButtonLink>
               </div>
               <ButtonLink href='/about'>Learn more about me</ButtonLink>
             </div>
@@ -112,7 +98,7 @@ export default function IndexPage({
                 <span>Resume</span>
               </UnstyledLink>
               <UnstyledLink
-                href='https://twitter.com/th_clarence'
+                href='https://twitter.com/mertinop'
                 className={clsx(
                   'inline-flex items-center gap-1 text-sm font-medium md:text-base',
                   'group text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white',
@@ -124,10 +110,10 @@ export default function IndexPage({
                 }}
               >
                 <SiTwitter className='shrink-0 transition-colors group-hover:text-[#1da1f2]' />
-                <span>@th_clarence</span>
+                <span>@mertinop</span>
               </UnstyledLink>
               <UnstyledLink
-                href='https://github.com/theodorusclarence'
+                href='https://github.com/martinsantibanez'
                 className={clsx(
                   'inline-flex items-center gap-1 text-sm font-medium md:text-base',
                   'text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white',
@@ -139,11 +125,11 @@ export default function IndexPage({
                 }}
               >
                 <SiGithub className='shrink-0' />
-                <span>theodorusclarence</span>
+                <span>martinsantibanez</span>
               </UnstyledLink>
             </div>
           </article>
-          <UnstyledLink
+          {/* <UnstyledLink
             href='#intro'
             className={clsx(
               'absolute bottom-2 left-1/2 -translate-x-1/2 md:bottom-10',
@@ -152,17 +138,17 @@ export default function IndexPage({
             )}
           >
             <IoArrowDownOutline className='h-8 w-8 animate-bounce md:h-10 md:w-10' />
-          </UnstyledLink>
-          <TC
+          </UnstyledLink> */}
+          {/* <TC
             className={clsx(
               'absolute bottom-0 right-6',
               'translate-y-[37%] transform-gpu',
               'w-[calc(100%-3rem)] md:w-[600px] 2xl:w-[900px]',
               'z-[-1] opacity-70 dark:opacity-30'
             )}
-          />
+          /> */}
         </section>
-
+        {/* 
         <InView triggerOnce rootMargin='-40% 0px'>
           {({ ref, inView }) => (
             <section
@@ -230,9 +216,9 @@ export default function IndexPage({
               </article>
             </section>
           )}
-        </InView>
+        </InView> */}
 
-        <InView triggerOnce rootMargin='-40% 0px'>
+        {/* <InView triggerOnce rootMargin='-40% 0px'>
           {({ ref, inView }) => (
             <section
               ref={ref}
@@ -261,7 +247,7 @@ export default function IndexPage({
               </article>
             </section>
           )}
-        </InView>
+        </InView> */}
 
         <InView triggerOnce rootMargin='-40% 0px'>
           {({ ref, inView }) => (
@@ -273,9 +259,6 @@ export default function IndexPage({
                 <h2 className='text-2xl md:text-4xl' id='projects'>
                   <Accent>Featured Projects</Accent>
                 </h2>
-                <p className='mt-2 text-gray-600 dark:text-gray-300'>
-                  Some projects that I'm proud of
-                </p>
                 <ul className='mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
                   {populatedProjects.map((project, i) => (
                     <ProjectCard
@@ -292,13 +275,13 @@ export default function IndexPage({
                     trackEvent('Home: See more project', 'navigate')
                   }
                 >
-                  See more project
+                  View all projects
                 </ButtonLink>
               </article>
             </section>
           )}
         </InView>
-
+        {/* 
         <InView triggerOnce rootMargin='-40% 0px'>
           {({ ref, inView }) => (
             <section
@@ -307,7 +290,7 @@ export default function IndexPage({
             >
               <article className='layout' data-fade='0'>
                 <h2 className='text-2xl md:text-4xl' id='library'>
-                  <Accent>Library of Code Snippets</Accent>
+                  <Accent>Code Snippets</Accent>
                 </h2>
                 <p className='mt-2 text-gray-600 dark:text-gray-300'>
                   List of code snippets that I store for easy access.
@@ -333,7 +316,7 @@ export default function IndexPage({
               </article>
             </section>
           )}
-        </InView>
+        </InView> */}
       </main>
     </Layout>
   );
@@ -346,14 +329,7 @@ export async function getStaticProps() {
   const projects = await getAllFilesFrontmatter('projects');
   const library = await getAllFilesFrontmatter('library');
 
-  const featuredPosts = getFeatured(blogs, [
-    'one-stop-starter',
-    '2021-retrospective',
-    'nextjs-storybook-tailwind',
-    'react-core-concept-rendering-state',
-    'nextjs-fetch-method',
-    'youtube-list',
-  ]);
+  const featuredPosts = getFeatured(blogs, ['example', 'exampletwo']);
   const featuredProjects = getFeatured(projects, [
     'seasforus',
     'ppdbsumsel',
@@ -368,10 +344,7 @@ export async function getStaticProps() {
     'tailwindcss-basestyle',
   ]);
 
-  const introPosts = getFeatured(blogs, [
-    'btb-flex-mental-model',
-    'nextjs-fetch-method',
-  ]);
+  const introPosts = getFeatured(blogs, ['example', 'exampletwo']);
 
   return {
     props: { featuredPosts, featuredProjects, featuredLibrary, introPosts },

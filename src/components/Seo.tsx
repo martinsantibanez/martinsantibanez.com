@@ -4,12 +4,11 @@ import { useRouter } from 'next/router';
 import { openGraph } from '@/lib/helper';
 
 const defaultMeta = {
-  title: 'Theodorus Clarence',
-  siteName: 'theodorusclarence.com',
-  description:
-    'An online portfolio and blog by Theodorus Clarence. Showcase of my projects, and some of my thoughts about website development.',
-  url: 'https://theodorusclarence.com',
-  image: 'https://theodorusclarence.com/favicon/large-og.jpg',
+  title: 'Martín Santibáñez Ávalos',
+  siteName: 'martinsantibanez.com',
+  description: 'Portfolio of Martin Santibanez, Software Engineer from Chile..',
+  url: 'https://martinsantibanez.com',
+  image: 'https://martinsantibanez.com/favicon/large-og.jpg',
   type: 'website',
   robots: 'follow, index',
 };
@@ -71,7 +70,7 @@ export default function Seo(props: SeoProps) {
           <meta
             name='author'
             property='article:author'
-            content='Theodorus Clarence'
+            content='Martin Santibanez'
           />
         </>
       )}

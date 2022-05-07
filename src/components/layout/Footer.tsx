@@ -1,73 +1,64 @@
-import { FeedbackFish } from '@feedback-fish/react';
-import * as React from 'react';
-import CopyToClipboard from 'react-copy-to-clipboard';
-import { FiMail } from 'react-icons/fi';
-import { SiGithub, SiLinkedin, SiTwitter } from 'react-icons/si';
-import { Tooltip as TooltipTippy } from 'react-tippy';
-
-import { trackEvent } from '@/lib/analytics';
-
-import Accent from '@/components/Accent';
 import Spotify from '@/components/layout/Spotify';
 import UnstyledLink from '@/components/links/UnstyledLink';
-import Tooltip from '@/components/Tooltip';
-
 import { spotifyFlag } from '@/constants/env';
+import { trackEvent } from '@/lib/analytics';
+import * as React from 'react';
+import { SiGithub, SiLinkedin, SiTwitter } from 'react-icons/si';
 
 export default function Footer() {
   return (
     <footer className='mt-4 pb-2'>
       <main className='layout flex flex-col items-center border-t pt-6 dark:border-gray-600'>
-        <FooterLinks />
-
+        {/* <FooterLinks /> */}
         {spotifyFlag && <Spotify className='mt-8' />}
 
-        <p className='mt-12 font-medium text-gray-600 dark:text-gray-300'>
-          Reach me out
+        <p className='font-medium text-gray-600 dark:text-gray-300'>
+          Get in touch
         </p>
         <SocialLinks />
 
         <p className='mt-8 text-sm text-gray-600 dark:text-gray-300'>
-          © Theodorus Clarence {new Date().getFullYear()} •{' '}
-          <FeedbackFish projectId='59a0c0e0d549a7'>
-            <button className='rounded-sm hover:text-gray-800 focus:outline-none focus-visible:ring focus-visible:ring-primary-300 dark:hover:text-gray-100'>
-              Got any feedback?
-            </button>
-          </FeedbackFish>
+          © Martin Santibanez {new Date().getFullYear()}
+        </p>
+        <p className='mt-1 text-sm text-gray-600 dark:text-gray-300'>
+          Forked from{' '}
+          <UnstyledLink href='https://github.com/theodorusclarence/theodorusclarence.com'>
+            Theodorus Clarence
+          </UnstyledLink>
         </p>
       </main>
     </footer>
   );
 }
 
-function FooterLinks() {
-  return (
-    <div className='flex flex-wrap justify-center gap-y-4 gap-x-8'>
-      {footerLinks.map(({ href, text, tooltip }) => (
-        <Tooltip interactive={false} key={href} content={tooltip}>
-          <UnstyledLink
-            className='animated-underline rounded-sm text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-primary-300 dark:text-gray-200'
-            href={href}
-            onClick={() => {
-              trackEvent(`Footer Link: ${text}`, 'link');
-            }}
-          >
-            {text}
-          </UnstyledLink>
-        </Tooltip>
-      ))}
-    </div>
-  );
-}
+// function FooterLinks() {
+//   return (
+//     <div className='flex flex-wrap justify-center gap-y-4 gap-x-8'>
+//       {footerLinks.map(({ href, text, tooltip }) => (
+//         <Tooltip interactive={false} key={href} content={tooltip}>
+//           <UnstyledLink
+//             className='animated-underline rounded-sm text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-primary-300 dark:text-gray-200'
+//             href={href}
+//             onClick={() => {
+//               trackEvent(`Footer Link: ${text}`, 'link');
+//             }}
+//           >
+//             {text}
+//           </UnstyledLink>
+//         </Tooltip>
+//       ))}
+//     </div>
+//   );
+// }
 
 function SocialLinks() {
-  const [copyStatus, setCopyStatus] = React.useState(
-    'Click the mail logo to copy'
-  );
+  // const [copyStatus, setCopyStatus] = React.useState(
+  //   'Click the mail logo to copy'
+  // );
 
   return (
     <div className='mt-2 flex space-x-4'>
-      <div className='flex items-center justify-center'>
+      {/* <div className='flex items-center justify-center'>
         <TooltipTippy
           trigger='mouseenter'
           hideOnClick={false}
@@ -96,107 +87,51 @@ function SocialLinks() {
             </button>
           </CopyToClipboard>
         </TooltipTippy>
-      </div>
+      </div> */}
       {socials.map((social) => (
-        <Tooltip interactive={false} key={social.href} content={social.text}>
-          <UnstyledLink
-            className='inline-flex items-center justify-center rounded-sm focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
-            href={social.href}
-            onClick={() => {
-              trackEvent(`Footer Link: ${social.id}`, 'link');
-            }}
-          >
-            <social.icon className='my-auto h-6 w-6 align-middle text-gray-600 transition-colors hover:text-primary-300 dark:text-gray-300 dark:hover:text-primary-300' />
-          </UnstyledLink>
-        </Tooltip>
+        // <Tooltip interactive={false} key={social.href} content={social.text}>
+        <UnstyledLink
+          key={social.href}
+          className='inline-flex items-center justify-center rounded-sm focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
+          href={social.href}
+          onClick={() => {
+            trackEvent(`Footer Link: ${social.id}`, 'link');
+          }}
+        >
+          <social.icon className='my-auto h-6 w-6 align-middle text-gray-600 transition-colors hover:text-primary-300 dark:text-gray-300 dark:hover:text-primary-300' />
+        </UnstyledLink>
+        // </Tooltip>
       ))}
     </div>
   );
 }
 
-const footerLinks = [
-  {
-    href: 'https://github.com/theodorusclarence/theodorusclarence.com',
-    text: 'Source Code',
-    tooltip: (
-      <>
-        This website is <strong>open source</strong>!
-      </>
-    ),
-  },
-  {
-    href: 'https://clarence.link/docs',
-    text: 'Docs',
-    tooltip: 'Personal documentation about my best practices on development',
-  },
-  {
-    href: 'https://clarence.link/booknotes',
-    text: 'Book Notes',
-    tooltip: 'Note collection of books that I read',
-  },
-  {
-    href: 'https://clarence.link/starters',
-    text: 'Starter Templates',
-    tooltip: 'Starter that I build and use throughout my projects',
-  },
-  {
-    href: 'https://clarence.link/um',
-    text: 'Analytics',
-    tooltip: 'theodorusclarence.com views and visitors analytics',
-  },
-  {
-    href: '/statistics',
-    text: 'Statistics',
-    tooltip: 'Blog, Projects, and Library Statistics',
-  },
-  {
-    href: '/guestbook',
-    text: 'Guestbook',
-    tooltip:
-      'Leave whatever you like to say—message, appreciation, suggestions',
-  },
-  {
-    href: '/subscribe',
-    text: 'Subscribe',
-    tooltip: 'Get an email whenever I post, no spam',
-  },
-  {
-    href: 'https://theodorusclarence.com/rss.xml',
-    text: 'RSS',
-    tooltip: 'Add theodorusclarence.com blog to your feeds',
-  },
-];
+// const footerLinks = [
+//   {
+//     href: 'https://github.com/martinsantibanez/martinsantibanez.com',
+//     text: 'Source Code',
+//     tooltip: (
+//       <>
+//         This website is <strong>open source</strong>!
+//       </>
+//     ),
+//   },
+// ];
 
 const socials = [
   {
-    href: 'https://clarence.link/github',
+    href: 'https://github.com/martinsantibanez',
     icon: SiGithub,
     id: 'Github',
-    text: (
-      <>
-        See my projects on <Accent className='font-medium'>Github</Accent>
-      </>
-    ),
   },
   {
-    href: 'https://clarence.link/linkedin',
+    href: 'https://www.linkedin.com/in/msantibaneza/',
     icon: SiLinkedin,
     id: 'Linkedin',
-    text: (
-      <>
-        Find me on <Accent className='font-medium'>Linkedin</Accent>
-      </>
-    ),
   },
   {
-    href: 'https://clarence.link/twt',
+    href: 'https://www.twitter.com/mertinop',
     icon: SiTwitter,
     id: 'Twitter',
-    text: (
-      <>
-        I post updates, tips, insight, and sometimes do some talk. Follow me on{' '}
-        <Accent className='font-medium'>Twitter</Accent>!
-      </>
-    ),
   },
 ];

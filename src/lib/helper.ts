@@ -37,17 +37,6 @@ export function openGraph({
 }
 
 /**
- * Remove `id-` prefix
- */
-export const cleanBlogPrefix = (slug: string) => {
-  if (slug.slice(0, 3) === 'id-') {
-    return slug.slice(3);
-  } else {
-    return slug;
-  }
-};
-
-/**
  * Access session storage on browser
  */
 export function getFromSessionStorage(key: string) {

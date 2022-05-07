@@ -1,18 +1,3 @@
-import clsx from 'clsx';
-import { format } from 'date-fns';
-import { getMDXComponent } from 'mdx-bundler/client';
-import { GetStaticPaths, GetStaticProps } from 'next';
-import * as React from 'react';
-import { HiOutlineClock, HiOutlineEye } from 'react-icons/hi';
-import { MdHistory } from 'react-icons/md';
-
-import { trackEvent } from '@/lib/analytics';
-import { cleanBlogPrefix } from '@/lib/helper';
-import { getFileBySlug, getFiles, getRecommendations } from '@/lib/mdx';
-import useContentMeta from '@/hooks/useContentMeta';
-import useInjectContentMeta from '@/hooks/useInjectContentMeta';
-import useScrollSpy from '@/hooks/useScrollspy';
-
 import Accent from '@/components/Accent';
 import BlogCard from '@/components/content/blog/BlogCard';
 import SubscribeCard from '@/components/content/blog/SubscribeCard';
@@ -30,8 +15,19 @@ import ShareTweetButton from '@/components/links/ShareTweetButton';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 import Tooltip from '@/components/Tooltip';
-
+import useContentMeta from '@/hooks/useContentMeta';
+import useInjectContentMeta from '@/hooks/useInjectContentMeta';
+import useScrollSpy from '@/hooks/useScrollspy';
+import { trackEvent } from '@/lib/analytics';
+import { getFileBySlug, getFiles, getRecommendations } from '@/lib/mdx';
 import { BlogFrontmatter, BlogType } from '@/types/frontmatters';
+import clsx from 'clsx';
+import { format } from 'date-fns';
+import { getMDXComponent } from 'mdx-bundler/client';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import * as React from 'react';
+import { HiOutlineClock, HiOutlineEye } from 'react-icons/hi';
+import { MdHistory } from 'react-icons/md';
 
 type SingleBlogPageProps = {
   recommendations: BlogFrontmatter[];
@@ -56,8 +52,7 @@ export default function SingleBlogPage({
   //#endregion  //*======== Link Constants ===========
 
   //#region  //*=========== Blog Language ===========
-  const cleanSlug = cleanBlogPrefix(frontmatter.slug);
-  const isEnglish = cleanSlug === frontmatter.slug;
+  const cleanSlug = frontmatter.slug;
   //#endregion  //*======== Blog Language ===========
 
   //#region  //*=========== Content Meta ===========
@@ -169,14 +164,6 @@ export default function SingleBlogPage({
                   </div>
                 )}
               </div>
-              {!frontmatter?.englishOnly && (
-                <CustomLink
-                  href={`/blog/${isEnglish ? 'id-' : ''}${cleanSlug}`}
-                  className='mt-4'
-                >
-                  Read in {isEnglish ? 'Bahasa Indonesia' : 'English'}
-                </CustomLink>
-              )}
             </div>
 
             <hr className='dark:border-gray-600' />
